@@ -1,0 +1,32 @@
+/*ANIMATION*/
+@-webkit-keyframes fade-text-down {
+    0% {
+        -webkit-transform: translateY(-40%);
+        transform: translateY(-40%);
+        opacity: 0;
+    }
+    30% {
+        opacity:1;
+    }
+    100% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fade-text-up {
+    0% {
+        -webkit-transform: translateY(40%);
+        transform: translateY(40%);
+        opacity: 0;
+    }
+    30% {
+        opacity:1;
+    }
+    100% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
