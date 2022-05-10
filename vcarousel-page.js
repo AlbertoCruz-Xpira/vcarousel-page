@@ -57,6 +57,17 @@ function scrollListenerOn(totalSections, sections) {
     var sectionNow = 0;
 
     window.addEventListener('wheel',wheel);
+    window.addEventListener('keydown', keyDown);
+
+    function keyDown(e) {
+        
+        if(e.keyCode == 40 && sectionNow < totalSections - 1 )  { // keyboard down
+            sectionNow = stepDown(sectionNow, sections);
+        } else if(e.keyCode == 38 && sectionNow > 0 ) { //keyboard up
+            sectionNow = stepUp(sectionNow, sections);
+        }
+    }
+
 
     function wheel(e){
         var delta = e.deltaY;
