@@ -1,5 +1,4 @@
 /*1. ANIMATION FUNCTIONS */
-
 /* for every .animate of section, add class fadeText */
 function fadeText(section, direction) {
     if (direction == "down") {
@@ -55,19 +54,31 @@ function scrollListenerOn(totalSections, sections) {
     var lastScroll = 9999;
     var scrollIdleTime = 300; // time interval that we consider a new scroll event
     var sectionNow = 0;
-
+	
     window.addEventListener('wheel',wheel);
     window.addEventListener('keydown', keyDown);
+    /*window.addEventListener('touchmove', function(e) {
+        e.preventDefault();
+        var touch = e.touches[0];
+        alert(touch.pageX + " - " + touch.pageY);
+    }, false);*/
 
-    function keyDown(e) {
-        
-        if(e.keyCode == 40 && sectionNow < totalSections - 1 )  { // keyboard down
-            sectionNow = stepDown(sectionNow, sections);
-        } else if(e.keyCode == 38 && sectionNow > 0 ) { //keyboard up
-            sectionNow = stepUp(sectionNow, sections);
+    /*PHONE SCROLL EVENT*/
+	var ts = 0;
+	window.addEventListener('touchstart', function (e) {
+        if (jQuery(window).scrollTop() != undefined) {
+            ts = jQuery(window).scrollTop();
         }
-    }
+	});
 
+	window.addEventListener('touchend', function (e){
+	   var te = jQuery(window).scrollTop();
+	   if (ts > te + 1) { //tochmove down
+		    sectionNow = stepUp(sectionNow, sections);
+	   }else if (ts < te - 1) { //tochmove up
+		    sectionNow = stepDown(sectionNow, sections);
+	   }
+	});
 
     function wheel(e){
         var delta = e.deltaY;
@@ -78,20 +89,29 @@ function scrollListenerOn(totalSections, sections) {
             scrollingDirection = 1;
         } else if (delta < 0 && ( scrollingDirection != 2 || timeNow > lastScroll + scrollIdleTime) && sectionNow > 0) {
             sectionNow = stepUp(sectionNow, sections);
-            console.log("up");
             scrollingDirection = 2;
         }
 
         lastScroll = timeNow;
     }
+
+    function keyDown(e) {
+        if(e.keyCode == 40 && sectionNow < totalSections - 1 )  { // keyboard down
+            sectionNow = stepDown(sectionNow, sections);
+        } else if(e.keyCode == 38 && sectionNow > 0 ) { //keyboard up
+            sectionNow = stepUp(sectionNow, sections);
+        }
+    }
 }
 
 /*M. MAIN FUNCION*/
 function main(selectorSection) {
-    const totalSections = jQuery(selectorSection).children().length;
-    const sections = jQuery(selectorSection).children();
-
+    var totalSections = jQuery(selectorSection).children().length;
+    var sections = jQuery(selectorSection).children();
+	
     scrollListenerOn(totalSections, sections);
 }
 
-main(".elementor-inner > .elementor-section-wrap");
+jQuery(document).ready(function( $ ){
+    main(".elementor-inner > .elementor-section-wrap");
+});
