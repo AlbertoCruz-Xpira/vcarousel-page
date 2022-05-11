@@ -26,7 +26,7 @@ function cleanAnimation(section) {
 function jumpToSelector(selector) {
     jQuery('html, body').animate({
         scrollTop: jQuery(selector).offset().top
-    }, 50);
+    }, 10);
 }
 
 function stepDown(sectionNow, sections) {
