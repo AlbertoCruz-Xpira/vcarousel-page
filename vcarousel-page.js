@@ -57,11 +57,6 @@ function scrollListenerOn(totalSections, sections) {
 	
     window.addEventListener('wheel',wheel);
     window.addEventListener('keydown', keyDown);
-    /*window.addEventListener('touchmove', function(e) {
-        e.preventDefault();
-        var touch = e.touches[0];
-        alert(touch.pageX + " - " + touch.pageY);
-    }, false);*/
 
     /*PHONE SCROLL EVENT*/
 	var ts = 0;
@@ -104,11 +99,27 @@ function scrollListenerOn(totalSections, sections) {
     }
 }
 
+/*3. ADJUST 100% sections*/
+function resizeSections(totalSections, sections) {
+	var windowHeight = jQuery(window).height();
+	for (i = 0; i < totalSections; i++) {
+		jQuery(sections).eq(i).css('height', windowHeight);
+	}
+}
+
+function resizeWindowOn(totalSections, sections) {
+	jQuery(window).resize(function() {
+		resizeSections(totalSections, sections);
+	});
+}
+
 /*M. MAIN FUNCION*/
 function main(selectorSection) {
     var totalSections = jQuery(selectorSection).children().length;
     var sections = jQuery(selectorSection).children();
 	
+	resizeSections(totalSections, sections);
+	resizeWindowOn(totalSections, sections);
     scrollListenerOn(totalSections, sections);
 }
 
